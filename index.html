@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="de">
+	<head>
+		<meta charset="utf-8" />
+		<title>loopjs</title>
+		</script>
+		<link rel="stylesheet" href="css/css.css" type="text/css" media="screen">
+		<script src="js/lib/jquery.js"></script>
+		<script src="js/loop/Loop.js"></script>
+		<script src="js/loop/Scanner.js"></script>
+		<script src="js/loop/Token.js"></script>
+	</head>
+	<body>
+		<div id="input">
+			<textarea id="code">
+x2 := x0 + 5;
+LOOP x2 DO
+  x0 := x0 + 2; 
+END
+			</textarea>
+			<button id="runButton">Run</button>
+		</div>
+		<div id ="output"></div>
+		<script src="js/app.js"></script>
+	</body>
+</html>
