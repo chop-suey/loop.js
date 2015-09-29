@@ -58,7 +58,7 @@ function Scanner(source) {
 					break;			
 				case ':':
 					if(source[++i] === '=') {
-						tokens.push(new Token(':=', 'SEPARATOR'));
+						tokens.push(new Token(':=', 'ASSIGNMENT'));
 					} else {
 						tokens.push(new Token(source[i], 'NONE'));
 					}
