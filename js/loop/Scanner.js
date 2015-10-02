@@ -2,30 +2,40 @@ function Scanner(source) {
 	var that = this;
 	var i = 0;
 	var tokens = [];
+	var eof = new Token('', 'EOF');
 	
 	this.hasNext = function() {
 		return i < tokens.length;
 		// return true if there is a next token in this scanner
 	};
 
-	this.next = function() {
+	this.scan = function() {
 		if(i < tokens.length) {
-			return tokens[i++];
-		} else {
-			return new Token('', 'NONE');
+			i++;
 		}
-		// get the next token provided by this scanner and increment the token pointer
+	};
+	
+	this.token = function() {
+		if(i < tokens.length) {
+			return tokens[i];
+		} else {
+			return eof;
+		}
 	};
 
 	this.get = function(index) {
 		// get token for a certain index
+	};
+	
+	this.getIndex = function() {
+		return i;
 	};
 
 	this.getTokenCount = function() {
 		return tokens.length;
 	};
 	
-	var parse = function() {
+	var scan = function() {
 		while(i < source.length) {
 			switch(source[i]) {
 				case ' ':
@@ -130,7 +140,7 @@ function Scanner(source) {
 	var extractKeyword = function(keyword) {
 		var candidate = getTokenCandidate();
 		if(candidate === keyword) {
-			tokens.push(new Token(keyword, 'KEYWORD'));
+			tokens.push(new Token(keyword, keyword));
 		} else {
 			tokens.push(new Token(candidate, 'NONE'))
 		}
@@ -144,9 +154,11 @@ function Scanner(source) {
 			switch(source[i]) {
 				case '\t':
 				case '\n':
+//				case '\r':
 				case ' ':
 				case ':':
 				case ';':
+					i--;
 					done = true;
 					break;
 				default:
@@ -157,5 +169,5 @@ function Scanner(source) {
 		return candidate;
 	}
 	
-	parse(source);
+	scan();
 }

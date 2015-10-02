@@ -11,9 +11,20 @@ $(function() {
 		var scanner = new Scanner(code);
 		
 		while(scanner.hasNext()) {
-			var token = scanner.next();
+			var token = scanner.token();
+			scanner.scan();
 			appendText('<' + token.kind + ': "' + token.string + '" >');
 		}
+	});
+	
+	$('#checkButton').click(function() {
+		var code = $('#code').val();
+		var parser = new Parser(new Scanner(code));
+		parser.setErrorHandler(function(index, exp, act) {
+			output.html('');
+			appendText('[ ' + index + ': ' + exp + ' , ' + act + ' ]');
+		});
+		alert(parser.validate());
 	});
 	
 	var appendText = function(text) {
