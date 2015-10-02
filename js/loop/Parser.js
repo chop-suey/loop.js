@@ -12,20 +12,10 @@ function Parser(scanner) {
 		var valid = false;
 		if(scanner.token().kind === expected) {
 			valid = true;
-			scanner.scan();
 		} else if (errorHandler){
-			errorHandler(scanner.getIndex(), expected, scanner.token().kind);
+			errorHandler(scanner.getIndex(), expected, scanner.token());
 		}
-		return valid;
-	}
-	
-	var alternative = function(variant1, variant2) {
-		var kind = scanner.token().kind;
-		var valid = false;
-		if(kind === variant1 || kind === variant2) {
-			valid = true;
-			scanner.scan();
-		}
+		scanner.scan();
 		return valid;
 	}
 	
@@ -36,7 +26,7 @@ function Parser(scanner) {
 		valid &= check('VAR');
 		valid &= check('ASSIGNMENT');
 		valid &= check('VAR');
-		valid &= alternative('ADD', 'SUBTRACT');
+		valid &= check('OPERATOR');
 		valid &= check('NUMBER');
 		
 		return valid;
@@ -52,7 +42,7 @@ function Parser(scanner) {
 		}
 		kind = scanner.token().kind;
 		if(kind === 'SEPARATOR') {
-			valid = check('SEPARATOR');
+			valid &= check('SEPARATOR');
 			valid &= p();
 		}
 		return valid;

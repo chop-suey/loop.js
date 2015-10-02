@@ -49,10 +49,10 @@ function Scanner(source) {
 					tokens.push(new Token(';', 'SEPARATOR'));
 					break;
 				case '+':
-					tokens.push(new Token('+', 'ADD'));
+					tokens.push(new Token('+', 'OPERATOR'));
 					break;
 				case '-':
-					tokens.push(new Token('-', 'SUBTRACT'));
+					tokens.push(new Token('-', 'OPERATOR'));
 					break;
 				case '0':
 				case '1':

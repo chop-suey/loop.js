@@ -20,11 +20,16 @@ $(function() {
 	$('#checkButton').click(function() {
 		var code = $('#code').val();
 		var parser = new Parser(new Scanner(code));
+
+		output.html('');
+		
 		parser.setErrorHandler(function(index, exp, act) {
-			output.html('');
-			appendText('[ ' + index + ': ' + exp + ' , ' + act + ' ]');
+			appendText('[ ' + index + ': ' + exp + ' , ' + act.kind + ': ' + act.string + ' ]');
 		});
-		alert(parser.validate());
+		
+		var valid = parser.validate();
+		$('#code').addClass(valid ? 'green' : 'red');
+		$('#code').removeClass(valid ? 'red' : 'green');
 	});
 	
 	var appendText = function(text) {
